@@ -1,0 +1,29 @@
+{
+  "name": "W",
+  "version": "1.0.0",
+  "description": "这是一个基于双向绑定实现的响应式框架，主要思想来源于Vue",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wanghangit/W.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wanghangit/W/issues"
+  },
+  "homepage": "https://github.com/wanghangit/W#readme",
+  "devDependencies": {
+    "@babel/core": "^7.7.0",
+    "babel": "^6.23.0",
+    "html-webpack-plugin": "^3.2.0",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  }
+}
