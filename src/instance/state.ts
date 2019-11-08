@@ -1,5 +1,5 @@
 import W from './index'
-import { observer } from '../observer'
+import { observe } from '../observer'
 import { noop } from '../util'
 
 
@@ -27,7 +27,7 @@ function initData(w: W) {
     }
   }
   // 双向绑定劫持数据
-  observer(data, true)
+  observe(data, true)
 }
 
 let commonProperty = {
