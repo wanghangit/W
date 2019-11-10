@@ -18,6 +18,14 @@ export function isObject(obj: any): boolean {
   return obj !== null && typeof obj === 'object'
 }
 
+export function isDef(v:any): boolean {
+  return v!==undefined && v!==null
+}
+
+export function isUndef(v:any): boolean {
+  return v===undefined || v===null
+}
+
 /**在原型链上定义属性 */
 export function def(target: object, key: string, val: any, enumerable?:boolean){
   Object.defineProperty(target, key, {
@@ -38,6 +46,10 @@ export function isArray(obj: any): boolean{
 
 export function isPlainObject(obj: any): boolean{
   return _toString.call(obj) === '[object Object]'
+}
+
+export function isPrimitive(val){
+  return typeof val === 'string' || typeof val === 'number' || typeof val === 'boolean'
 }
 
 /**交换2个元素的值 */

@@ -1,6 +1,6 @@
-import W from './index'
-import { observe } from '../observer'
-import { noop } from '../util'
+import { W } from './index'
+import { observe } from '../observer/index'
+import { noop } from '../util/index'
 
 
 
@@ -45,5 +45,5 @@ function proxy(target: W, key: string, sourceKey: string){
   commonProperty.set = function setProxy(val: any){
     this[key][sourceKey] = val
   }
-  Object.defineProperty(target, key, commonProperty)
+  Object.defineProperty(target, sourceKey, commonProperty)
 }

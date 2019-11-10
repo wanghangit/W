@@ -8,3 +8,4 @@ export interface WOptions {
 export interface WObject extends Object{
   [key: string]: any
 }
+
