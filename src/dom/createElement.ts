@@ -17,16 +17,14 @@ export function createElement(
   if(isUndef(tag)){
     return createEmptyElement()
   }
-  debugger
   let elm = createHtmlElement(tag, data)
   children = normalizeChildren(children)
-  const childElm = children.map(child => {
+  children.map(child => {
     if(isPrimitive(child)){
       elm.appendChild(createTextNode(child))
     }else{
       elm.appendChild(child)
     }
-
   });
   console.log(elm)
   return elm

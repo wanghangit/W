@@ -3,6 +3,7 @@ import { initState } from './state'
 import { WOptions } from '../types/index'
 import { Watcher } from '../observer/Watcher'
 import { createElement, initRender } from '../dom/createElement';
+import { removeChild } from '../dom/node-ops';
 
 /**库的入口文件用来实例化一个root */
 export class W {
@@ -45,7 +46,11 @@ export class W {
     this._watcher = new Watcher(this, updateComponent, noop)
   }
   /**将节点更新到dom上 */
-  _update(htmlNode) {
+  _update(htmlNode: HTMLElement) {
+    /**每次更新前先将旧的清除 */
+    this._el.childNodes.forEach((node) => {
+      removeChild(this._el, node)
+    })
     this._el.appendChild(htmlNode)
   }
   /**根据render函数生成代码 */

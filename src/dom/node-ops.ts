@@ -16,3 +16,7 @@ export function createHtmlElement(tag:string, data?: object): HTMLElement {
 export function createTextNode(text: string): Text {
   return document.createTextNode(text)
 }
+
+export function removeChild(node: Element, child: Element| ChildNode){
+  node.removeChild(child)
+}
