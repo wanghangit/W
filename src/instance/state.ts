@@ -1,6 +1,6 @@
 import { W } from './index'
 import { observe } from '../observer/index'
-import { noop } from '../util/index'
+import { noop, hasOwn, warn } from '../util/index'
 
 
 
@@ -12,6 +12,9 @@ export const initState = function (w: W) {
   const _options = w._options;
   if (_options.data) {
     initData(w)
+  }
+  if(_options.methods) {
+    initMethod(w)
   }
 }
 
@@ -28,6 +31,18 @@ function initData(w: W) {
   }
   // 双向绑定劫持数据
   observe(data, true)
+}
+
+function initMethod(w: W){
+  let { methods, data } = w._options
+  for (const key in methods) {
+    if (methods.hasOwnProperty(key)) {
+      if(hasOwn(data, key)){
+        warn(`${key} is define in data`)
+      }
+      w[key] = methods[key].bind(w) 
+    }
+  }
 }
 
 let commonProperty = {
