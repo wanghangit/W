@@ -4,6 +4,7 @@ import { WOptions } from '../types/index'
 import { Watcher } from '../observer/Watcher'
 import { createElement, initRender } from '../dom/createElement';
 import { removeChild } from '../dom/node-ops';
+import Compile from '../compile/index';
 
 /**库的入口文件用来实例化一个root */
 export class W {
@@ -35,8 +36,12 @@ export class W {
     const dom = query(el)
     this._el = dom
     let updateComponent
+    let { render, template } = this._options
     // TODO 增加模版编译，目前只支持render方法
-    if (!this._options.render) {
+    if (!render) {
+      if(template){
+        render = new Compile(this, template.replace(/(^\s*)|[\r\n]|(\s*$)/g, ""))
+      }
       warn('render is not define')
       return
     }

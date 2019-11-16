@@ -12,10 +12,15 @@ const w = new W({
       this.text = "text is click"
     }
   },
-  render(h) {
-    return h("div", {class: 'demo'},
-      [h("span",{class: 'text', on: {
-        click: this.clickText
-      }}, this.text)])
-  },
+  template: `<div>
+    <div class='demo' @click=clickText>
+      {{this.test}}
+    </div>
+  </div>`,
+  // render(h) {
+  //   return h("div", {class: 'demo'},
+  //     [h("span",{class: 'text', on: {
+  //       click: this.clickText
+  //     }}, this.text)])
+  // },
 })

@@ -70,3 +70,13 @@ export function query(el: string | HTMLElement){
   }
   return el
 }
+
+export function makeMap(arr: string){
+  const map = {}
+  arr.split(",").forEach((tag) => {
+    map[tag] = true
+  })
+  return function(str: string){
+    return map[str]
+  }
+}
