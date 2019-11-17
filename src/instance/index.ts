@@ -42,8 +42,6 @@ export class W {
       if(template){
         render = new Compile(this, template.replace(/(^\s*)|[\r\n]|(\s*$)/g, ""))
       }
-      warn('render is not define')
-      return
     }
     updateComponent = () => {
       this._update(this._render())
