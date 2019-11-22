@@ -12,7 +12,7 @@ const attrValues = [
   /'([^']*)'+/.source,
   /([^\s"'=<>']+)/.source
 ] // 属性值
-const attrReg = new RegExp(`^\\s*${attrIdentifier.source}(?:\\s*${attrAssgin.source})\\s*(?:${attrValues.join("|")})`)
+const attrReg = new RegExp(`^\\s*${attrIdentifier.source}(?:\\s*(${attrAssgin.source}))\\s*(?:${attrValues.join("|")})`)
 const isUnaryTag = makeMap(
   'area,base,br,col,embed,frame,hr,img,input,isindex,keygen,' +
   'link,meta,param,source,track,wbr'
@@ -34,9 +34,8 @@ export function parseHtml(html: string, start: Function, end: Function, chars: F
       /**匹配到结束标签 */
       endTagMatch = html.match(endTag)
       if (endTagMatch) {
-        let curIndex = index;
         advance(endTagMatch[0].length)
-        parseEndTag(endTagMatch[1], curIndex, index)
+        parseEndTag(endTagMatch[1])
         continue
       }
       /**匹配到开始标签 */
@@ -47,6 +46,7 @@ export function parseHtml(html: string, start: Function, end: Function, chars: F
       }
     }
     let rest, text, next
+    /**说明有非标签的元素要处理 */
     if (textEnd > 0) {
       rest = html.slice(textEnd)
       while(!endTag.test(rest) && !startTagOpen.test(rest)){
@@ -58,6 +58,7 @@ export function parseHtml(html: string, start: Function, end: Function, chars: F
       text = html.substring(0, textEnd)
       advance(textEnd)
     }
+    /**没有标签直接当文本处理 */
     if(textEnd < 0){
       text = html
       html = ""
@@ -67,7 +68,7 @@ export function parseHtml(html: string, start: Function, end: Function, chars: F
     }
   }
   /**处理结束tag */
-  function parseEndTag(tag, start$, end$){
+  function parseEndTag(tag){
     if(stack[stack.length-1].tag!== tag){
       warn(`${tag} is parse error`)
     }
@@ -100,6 +101,7 @@ export function parseHtml(html: string, start: Function, end: Function, chars: F
       return match
     }
   }
+  /**处理开始标签 */
   function handleStartTag(match: WObject){
     let { tagName, unarySlash, attrs } = match
     for (let i = 0; i < attrs.length; i++) {
@@ -117,6 +119,7 @@ export function parseHtml(html: string, start: Function, end: Function, chars: F
     }
     start(tagName, attrs, unary)
   }
+  /**处理完字符串，向前移动 */
   function advance(n: number) {
     index += n
     html = html.substring(n)

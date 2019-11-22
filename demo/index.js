@@ -1,22 +1,28 @@
 import { W } from '../src/instance/index'
-console.log(W)
-console.log(111)
 
 const w = new W({
   el: "#root",
   data: {
-    text: 'this is a text'
-  },
-  methods: {
-    clickText: function(){
-      this.text = "text is click"
+    list: [
+      "aa","bb","cc"
+    ],
+    testClass: "test",
+    isShow: true,
+    person: {
+      name: "xiaoming"
     }
   },
-  template: `<div>
-    <div class='demo' @click=clickText>
-      {{this.test}}
-    </div>
-  </div>`,
+  methods: {
+    clickLi: function(){
+      console.log(this.list)
+    }
+  },
+  template: `<div>`+
+    `<div w-if="isShow" @click="clickLi">这是w-if内容</div>`+
+    `<div>{{person.name}}</div>`+
+    `<input />`+
+    `<ul class="demo"><li w-for="(item, index) in list" @click="clickLi" >{{item}}:{{index}}</li></ul>`+
+  `</div>`,
   // render(h) {
   //   return h("div", {class: 'demo'},
   //     [h("span",{class: 'text', on: {
@@ -24,3 +30,4 @@ const w = new W({
   //     }}, this.text)])
   // },
 })
+window.w = w

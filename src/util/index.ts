@@ -80,3 +80,11 @@ export function makeMap(arr: string){
     return map[str]
   }
 }
+
+export function cache(fn: Function){
+  const cache = {}
+  return function (str){
+    const hit = cache[str]
+    return hit || (cache[str] = fn(str))
+  }
+}

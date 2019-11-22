@@ -10,3 +10,28 @@ export interface WObject extends Object{
   [key: string]: any
 }
 
+export interface AstElement extends Object{
+  type: number, // 1 
+  tag: string,
+  attrsList: WObject[],
+  attrsMap: Object,
+  parent: AstElement | null,
+  children: AstElement[],
+  hasBindings?: boolean,
+  if?: any,
+  ifConditions?: any[],
+  else?: any,
+  elseif?: any,
+  for?: any,
+  alias?: any,
+  iterator1?: any
+  events?: any,
+  staticClass?: string,
+  plain?: boolean,
+  key?:any,
+  forProcessed?:boolean,
+  ifProcessed?:boolean,
+}
+
+
+

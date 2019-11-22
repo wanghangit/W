@@ -5,9 +5,10 @@ document.addEventListener("DOMContentLoaded", function(){
       list: [
         "aa","bb","cc"
       ],
-      testClass: "test"
+      testClass: "test",
+      isShow: true
     },
-    template: '<ul class="demo"><li v-for="(item, index) in list" :class="testClass" @click="clickLi" >{{item}}:{{index}}</li></ul>',
+    template: '<div><div v-if="isShow" @click="clickLi">这是v-if内容</div><ul class="demo"><li v-for="(item, index) in list" @click="clickLi" >{{item}}:{{index}}</li></ul></div>',
     methods: {
       clickLi: function(){
         console.log(this.list)

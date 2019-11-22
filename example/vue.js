@@ -1013,7 +1013,7 @@
     if ((!getter || setter) && arguments.length === 2) {
       val = obj[key];
     }
-
+    debugger
     var childOb = !shallow && observe(val);
     Object.defineProperty(obj, key, {
       enumerable: true,
@@ -8684,7 +8684,7 @@
     var tagRE = delimiters ? buildRegex(delimiters) : defaultTagRE;
     if (!tagRE.test(text)) {
       return
-    }
+    }    
     var tokens = [];
     var rawTokens = [];
     var lastIndex = tagRE.lastIndex = 0;
@@ -9922,7 +9922,7 @@
    *    create fresh nodes for them on each re-render;
    * 2. Completely skip them in the patching process.
    */
-  function optimize (root, options) {
+  function optimize (root, options) { 
     if (!root) { return }
     isStaticKey = genStaticKeysCached(options.staticKeys || '');
     isPlatformReservedTag = options.isReservedTag || no;
@@ -10106,7 +10106,6 @@
     if (Array.isArray(handler)) {
       return ("[" + (handler.map(function (handler) { return genHandler(name, handler); }).join(',')) + "]")
     }
-
     var isMethodPath = simplePathRE.test(handler.value);
     var isFunctionExpression = fnExpRE.test(handler.value);
 
@@ -10227,6 +10226,7 @@
   ) {
     var state = new CodegenState(options);
     var code = ast ? genElement(ast, state) : '_c("div")';
+    console.log(code)
     return {
       render: ("with(this){return " + code + "}"),
       staticRenderFns: state.staticRenderFns
@@ -10932,7 +10932,6 @@
     template,
     options
   ) {
-    debugger
     var ast = parse(template.trim(), options);
     console.log(Object.assign({}, ast))
     if (options.optimize !== false) {
@@ -10940,6 +10939,7 @@
     }
     console.log(Object.assign({}, ast))
     var code = generate(ast, options);
+    console.log(code)
     return {
       ast: ast,
       render: code.render,

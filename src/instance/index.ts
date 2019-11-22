@@ -2,7 +2,8 @@ import { warn, query, noop } from '../util/index'
 import { initState } from './state'
 import { WOptions } from '../types/index'
 import { Watcher } from '../observer/Watcher'
-import { createElement, initRender } from '../dom/createElement';
+import { initRender, renderMixin } from './render'
+import { createElement } from '../dom/createElement';
 import { removeChild } from '../dom/node-ops';
 import Compile from '../compile/index';
 
@@ -17,6 +18,7 @@ export class W {
   _watcher: Watcher; // 当前实例的渲染Watcher
   _createElement: Function
   _el: Element;
+  _c: Function
   constructor(options: WOptions) {
     this._init(options)
   }
@@ -40,7 +42,7 @@ export class W {
     // TODO 增加模版编译，目前只支持render方法
     if (!render) {
       if(template){
-        render = new Compile(this, template.replace(/(^\s*)|[\r\n]|(\s*$)/g, ""))
+        this._options.render= new Compile(this, template.replace(/(^\s*)|[\r\n]|(\s*$)/g, "")).render
       }
     }
     updateComponent = () => {
@@ -63,8 +65,12 @@ export class W {
     try {
       html = render.call(this, this._createElement)
     } catch (error) {
-      warn(`render error`)
+      warn(`render error:${error}`)
     }
     return html
   }
+}
+initMixin(W)
+function initMixin(W: Function){
+  renderMixin(W)
 }

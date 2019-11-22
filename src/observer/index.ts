@@ -80,7 +80,7 @@ export function defineReactive(target: object, key: string, val:any){
   const getter = proto && proto.get
   const setter = proto && proto.set
   // 深度遍历target对象直到所有属性都被劫持了数据getter，setter
-  let childOb = observe(target)
+  let childOb = observe(val)
   Object.defineProperty(target, key, {
     configurable: true,
     enumerable: true,
