@@ -6,11 +6,11 @@ export interface WOptions {
   template?: string // 模版字符串
 }
 /**为了兼容一些不常用的obj的类型检查 */
-export interface WObject extends Object{
+export interface WObject extends Object {
   [key: string]: any
 }
 
-export interface AstElement extends Object{
+export interface AstElement extends Object {
   type: number, // 1 
   tag: string,
   attrsList: WObject[],
@@ -28,9 +28,9 @@ export interface AstElement extends Object{
   events?: any,
   staticClass?: string,
   plain?: boolean,
-  key?:any,
-  forProcessed?:boolean,
-  ifProcessed?:boolean,
+  key?: any,
+  forProcessed?: boolean,
+  ifProcessed?: boolean,
 }
 
 

@@ -35,15 +35,15 @@ export function parse(html) {
       parent: currentParent,
       children: []
     }
+    // 对key的处理
+    processKey(element)
     // 对w-for的处理
     processFor(element)
     // 对w-if的处理
     processIf(element)
+    element.plain = !element.key && !element.attrsList.length
     // 对class的处理
     processClass(element)
-    // 对key的处理
-    processKey(element)
-    element.plain = !element.key && !attrs.length
     // 对其他属性的处理
     processAttr(element)
     // 定义树根

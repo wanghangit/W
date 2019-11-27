@@ -13,7 +13,7 @@ export const initState = function (w: W) {
   if (_options.data) {
     initData(w)
   }
-  if(_options.methods) {
+  if (_options.methods) {
     initMethod(w)
   }
 }
@@ -33,14 +33,14 @@ function initData(w: W) {
   observe(data, true)
 }
 
-function initMethod(w: W){
+function initMethod(w: W) {
   let { methods, data } = w._options
   for (const key in methods) {
     if (methods.hasOwnProperty(key)) {
-      if(hasOwn(data, key)){
+      if (hasOwn(data, key)) {
         warn(`${key} is define in data`)
       }
-      w[key] = methods[key].bind(w) 
+      w[key] = methods[key].bind(w)
     }
   }
 }
@@ -53,11 +53,11 @@ let commonProperty = {
 }
 
 /*通过proxy函数将_data（或者_props等）上面的数据代理到vm上，这样就可以用app.text代替app._data.text了。*/
-function proxy(target: W, key: string, sourceKey: string){
-  commonProperty.get = function getProxy(){
+function proxy(target: W, key: string, sourceKey: string) {
+  commonProperty.get = function getProxy() {
     return this[key][sourceKey]
   }
-  commonProperty.set = function setProxy(val: any){
+  commonProperty.set = function setProxy(val: any) {
     this[key][sourceKey] = val
   }
   Object.defineProperty(target, sourceKey, commonProperty)

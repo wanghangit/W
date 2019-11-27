@@ -1013,7 +1013,6 @@
     if ((!getter || setter) && arguments.length === 2) {
       val = obj[key];
     }
-    debugger
     var childOb = !shallow && observe(val);
     Object.defineProperty(obj, key, {
       enumerable: true,
@@ -2760,6 +2759,7 @@
 
   function lifecycleMixin (Vue) {
     Vue.prototype._update = function (vnode, hydrating) {
+      debugger
       var vm = this;
       var prevEl = vm.$el;
       var prevVnode = vm._vnode;
@@ -2890,6 +2890,7 @@
       };
     } else {
       updateComponent = function () {
+        debugger
         vm._update(vm._render(), hydrating);
       };
     }

@@ -1,33 +1,33 @@
 import { Watcher } from './Watcher'
 
 let wid = 0
-export class Dep{
+export class Dep {
   static target?: Watcher
   id: number
   subs: Watcher[]
-  constructor(){
+  constructor() {
     this.id = wid++
     this.subs = []
   }
-  addSub(sub: Watcher){
+  addSub(sub: Watcher) {
     this.subs.push(sub)
   }
-  removeSub(sub: Watcher){
-    if(this.subs.length){
+  removeSub(sub: Watcher) {
+    if (this.subs.length) {
       let index = this.subs.indexOf(sub)
-      if(index > -1){
+      if (index > -1) {
         this.subs.splice(index, 1)
       }
     }
   }
   // 收集依赖
-  depend(){
-    if(Dep.target){
+  depend() {
+    if (Dep.target) {
       Dep.target.addDep(this)
     }
   }
   // 通知所有Watcher更新
-  notify(){
+  notify() {
     const subs = this.subs.slice()
     for (let i = 0; i < subs.length; i++) {
       subs[i].update()
@@ -40,14 +40,14 @@ Dep.target = null
 const targetStack = []
 
 /*将watcher观察者实例设置给Dep.target，用以依赖收集。同时将该实例存入target栈中*/
-export function pushTarget(_target: Watcher){
-  if(Dep.target){
+export function pushTarget(_target: Watcher) {
+  if (Dep.target) {
     targetStack.push(Dep.target)
   }
   Dep.target = _target
 }
 
 /*将观察者实例从target栈中取出并设置给Dep.target*/
-export function popTarget(){
+export function popTarget() {
   Dep.target = targetStack.pop()
 }

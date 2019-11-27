@@ -90,10 +90,12 @@ function genData(el:AstElement){
   let data = "{"
   if(el.events){
     data+=`${getHandlers(el.events)},`
-  }else if(el.key){
+  }
+  if(el.key){
     data+=`key:${el.key},`
-  }else if(el.staticClass){
-    data+=`staticClass:${el.staticClass}`
+  }
+  if(el.staticClass){
+    data+=`staticClass:${JSON.stringify(el.staticClass)}`
   }
   data = data.replace(/,$/, "")+'}'
   return data

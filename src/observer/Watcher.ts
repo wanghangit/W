@@ -3,7 +3,7 @@ import { W } from '../instance/index'
 import { swap, warn, isObject } from '../util/index'
 
 let wid = 0
-export class Watcher{
+export class Watcher {
   deps: Dep[]; // 上次更新的依赖项
   newDeps: Dep[]; // 当前更新新增加的依赖型
   id: number;
@@ -20,7 +20,7 @@ export class Watcher{
     exp: Function,
     cb: Function,
     options?: object
-  ){
+  ) {
     this.w = w
     /*_watchers存放订阅者实例*/
     w._watchers.push(this)
@@ -35,7 +35,7 @@ export class Watcher{
     this.getter = exp
     this.value = this.get()
   }
-  get(){
+  get() {
     let value
     pushTarget(this)
     const w = this.w
@@ -57,22 +57,22 @@ export class Watcher{
     this.cleanDeps()
     return value
   }
-  addDep(dep: Dep){
+  addDep(dep: Dep) {
     const id = dep.id
     // 防止重复添加
-    if(!this.newDepIds.has(id)){
+    if (!this.newDepIds.has(id)) {
       this.newDepIds.add(id)
       this.newDeps.push(dep)
-      if(!this.depIds.has(id)){
+      if (!this.depIds.has(id)) {
         dep.addSub(this)
       }
     }
   }
-  cleanDeps(){
+  cleanDeps() {
     // 对比上次更新的依赖如果最新的依赖没有就移除掉当前Watcher
     for (let i = 0; i < this.deps.length; i++) {
       const dep = this.deps[i]
-      if(!this.newDepIds.has(dep.id)){
+      if (!this.newDepIds.has(dep.id)) {
         dep.removeSub(this)
       }
     }
@@ -82,18 +82,18 @@ export class Watcher{
     swap(this.deps, this.newDeps)
     this.newDeps.length = 0
   }
-  update(){
-    if(this.sync){
+  update() {
+    if (this.sync) {
       this.run()
-    }else{
+    } else {
       // TODO:
     }
   }
-  run(){
-    if(this.active){
+  run() {
+    if (this.active) {
       const newValue = this.get()
       /**即便值相同，拥有Deep属性的观察者以及在对象／数组上的观察者应该被触发更新，因为它们的值可能发生改变。 */
-      if(newValue!==this.value || isObject(newValue)){
+      if (newValue !== this.value || isObject(newValue)) {
         const oldValue = this.value
         this.value = newValue
         this.cb.call(this.w, newValue, oldValue)
@@ -101,13 +101,13 @@ export class Watcher{
     }
   }
   /*收集该watcher的所有deps依赖*/
-  depend(){
+  depend() {
     this.deps.forEach(dep => {
       dep.depend()
     });
   }
   /*将自身从所有依赖收集订阅列表删除*/
-  teardown(){
-    
+  teardown() {
+
   }
 }

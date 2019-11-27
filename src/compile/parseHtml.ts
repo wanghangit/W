@@ -69,9 +69,9 @@ export function parseHtml(html: string, start: Function, end: Function, chars: F
   }
   /**处理结束tag */
   function parseEndTag(tag){
-    if(stack[stack.length-1].tag!== tag){
-      warn(`${tag} is parse error`)
-    }
+    // if((stack[stack.length-1].tag)!= tag){
+    //   warn(`${tag} is parse error`)
+    // }
     end()
   }
   /**处理开始标签 */
