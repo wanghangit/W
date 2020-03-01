@@ -13,13 +13,16 @@ export class VNode {
   isStatic: boolean; // 是否是静态标签
   isComment: boolean; // 是否是注释节点
   isRootInsert: boolean; // 是否作为根节点插入
+  componentOptions: WObject; // 组件的属性
+  componentInstance: WObject;
   constructor(
     tag?: string,
     data?: WObject,
     children?: VNode[],
     text?: string,
     elm?: any,
-    context?: W
+    context?: W,
+    componentOptions?: WObject
   ) {
     this.tag = tag
     this.data = data
@@ -32,6 +35,7 @@ export class VNode {
     this.isStatic = false
     this.isComment = false
     this.isRootInsert = false
+    this.componentOptions = componentOptions
   }
 }
 

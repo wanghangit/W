@@ -3,15 +3,18 @@ import { initState } from './state'
 import { WOptions } from '../types/index'
 import { Watcher } from '../observer/Watcher'
 import { initRender, renderMixin } from './render'
-import { createVNode } from '../dom/createVNode';
-import { removeChild } from '../dom/node-ops';
 import Compile from '../compile/index';
 import { VNode } from '../dom/vnode'
 import { patch } from '../dom/patch'
+import { _extend, registerComponent, initGolbalApi } from './global-api'
 
 /**库的入口文件用来实例化一个root */
 export class W {
   static uid: number = 0; // 全局递增属性
+  static _extend: Function = _extend;
+  static component: Function = registerComponent
+  static cid: number = 0; // 用来记录自组件的id
+  static options; // 全局的属性
   _uid: number; // 用来记录每一个实例
   _options: WOptions; // 配置对象
   _isW: boolean; // 防止自身被观察
@@ -83,5 +86,6 @@ export class W {
 }
 initMixin(W)
 function initMixin(W: Function) {
+  initGolbalApi(W)
   renderMixin(W)
 }

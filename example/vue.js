@@ -2759,7 +2759,6 @@
 
   function lifecycleMixin (Vue) {
     Vue.prototype._update = function (vnode, hydrating) {
-      debugger
       var vm = this;
       var prevEl = vm.$el;
       var prevVnode = vm._vnode;
@@ -2890,7 +2889,6 @@
       };
     } else {
       updateComponent = function () {
-        debugger
         vm._update(vm._render(), hydrating);
       };
     }
@@ -4285,7 +4283,6 @@
     if (isUndef(Ctor)) {
       return
     }
-
     var baseCtor = context.$options._base;
 
     // plain options object: turn it into a constructor
@@ -4326,7 +4323,7 @@
     // resolve constructor options in case global mixins are applied after
     // component constructor creation
     resolveConstructorOptions(Ctor);
-
+    debugger
     // transform component v-model data into props & events
     if (isDef(data.model)) {
       transformModel(Ctor.options, data);
@@ -4961,6 +4958,7 @@
             validateComponentName(id);
           }
           if (type === 'component' && isPlainObject(definition)) {
+            debugger
             definition.name = definition.name || id;
             definition = this.options._base.extend(definition);
           }
@@ -5685,6 +5683,7 @@
 
     function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
       var i = vnode.data;
+      debugger
       if (isDef(i)) {
         var isReactivated = isDef(vnode.componentInstance) && i.keepAlive;
         if (isDef(i = i.hook) && isDef(i = i.init)) {

@@ -1,8 +1,9 @@
 /**初始化组件使用的options参数 */
 export interface WOptions {
   data: object | Function, // 组件内数据
-  methods: object, // 组件内的方法
+  methods?: object, // 组件内的方法
   render?: any, // 组件的render函数
+  components?: WObject, // 当前组件的子组件
   template?: string // 模版字符串
 }
 /**为了兼容一些不常用的obj的类型检查 */

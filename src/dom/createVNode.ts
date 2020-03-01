@@ -21,12 +21,13 @@ export function createVNode(
   }
   // 格式化children参数
   children = normalizeChildren(children)
-  let vnode: VNode
+  let vnode: VNode, Ctor
   /**保留标签说明是原生标签 */
   if (isHTMLTag(tag)) {
     vnode = new VNode(tag, data, children, undefined, undefined, context)
-  } else {
-    // TODO: 增加组件化
+  }/**如果不是原生标签就是自定义组件标签 */
+  else if (Ctor = W.options.components[tag]) {
+    vnode = createComponentVNode(Ctor, data, children, context, tag)
   }
   // let elm = createHtmlElement(tag)
   // /**绑定属性 */
@@ -44,6 +45,7 @@ export function createVNode(
   return vnode
 }
 
+
 function normalizeChildren(children) {
   if (isUndef(children)) {
     return []
@@ -54,6 +56,31 @@ function normalizeChildren(children) {
   return children
 }
 
-export function createTextVNode(text: string){
-  return new VNode(undefined,undefined,undefined,String(text))
+/**创建组件型的vnode */
+export function createComponentVNode(Ctor: Function, data: WObject | any[], children: [], context: W, tag?: string): VNode {
+  if (isUndef(Ctor)) {
+    return
+  }
+  Ctor = W._extend(Ctor)
+  console.log(Ctor.prototype)
+  data = data || {}
+  const listeners = data.on
+  const vnode = new VNode(Ctor.name || tag, data, undefined, undefined, undefined, context, { Ctor, listeners, tag, children })
+  return vnode
+}
+
+const componentVNodeHooks = {
+  init(vnode: VNode, parentElm?: Node, silbing?: Node){
+    if(!vnode.componentInstance){
+      // const child = vnode.componentInstance = 
+    }
+  },
+  prepatch(oldVnode,vnode){
+
+  },
+
+}
+
+export function createTextVNode(text: string) {
+  return new VNode(undefined, undefined, undefined, String(text))
 }

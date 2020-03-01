@@ -31,6 +31,7 @@ export function patch(oldVNode: VNode, vnode: VNode, element?: Element): Element
   if (isUndef(element) && sameVNode(oldVNode, vnode)) {
     patchVNode(oldVNode, vnode, insertedVnodeQueue)
   } else {
+    debugger
     // 初次渲染会传入挂载元素
     if (isDef(element.nodeType)) {
       oldVNode = emptyVNodeAt(element)

@@ -110,7 +110,7 @@ export function parseHtml(html: string, start: Function, end: Function, chars: F
         name: args[1],
         value: args[3] || args[4] || args[5] || '',
         start: args.start + args[0].match(/\s*/).length,
-        end: args.end
+        end: args.end 
       }    
     }
     let unary = isUnaryTag(tagName)
