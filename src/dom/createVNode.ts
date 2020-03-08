@@ -1,4 +1,4 @@
-import { W } from "../instance/index";
+import { W } from "../instance/W";
 import { WObject } from "../types/index";
 import { isUndef, isPrimitive, isDef, isHTMLTag } from "../util/index";
 import { createEmptyElement, createHtmlElement, createTextNode } from "./node-ops";
@@ -27,6 +27,7 @@ export function createVNode(
     vnode = new VNode(tag, data, children, undefined, undefined, context)
   }/**如果不是原生标签就是自定义组件标签 */
   else if (Ctor = W.options.components[tag]) {
+    debugger
     vnode = createComponentVNode(Ctor, data, children, context, tag)
   }
   // let elm = createHtmlElement(tag)
@@ -61,24 +62,38 @@ export function createComponentVNode(Ctor: Function, data: WObject | any[], chil
   if (isUndef(Ctor)) {
     return
   }
-  Ctor = W._extend(Ctor)
+  // Ctor = W._extend(Ctor) // 使用原型继承
   console.log(Ctor.prototype)
   data = data || {}
   const listeners = data.on
-  const vnode = new VNode(Ctor.name || tag, data, undefined, undefined, undefined, context, { Ctor, listeners, tag, children })
+  installCompoentHooks(data)
+  const vnode = new VNode(tag, data, undefined, undefined, undefined, context, { Ctor, listeners, tag, children })
   return vnode
 }
 
+function createComponenInstanceVnode(vnode: VNode){
+  return new vnode.componentOptions.Ctor({
+    _isComponent: true
+  })
+}
 const componentVNodeHooks = {
   init(vnode: VNode, parentElm?: Node, silbing?: Node){
     if(!vnode.componentInstance){
-      // const child = vnode.componentInstance = 
+      const child = vnode.componentInstance = createComponenInstanceVnode(vnode) // 执行组件的构造方法
+      child._mount(vnode.elm) // 挂载
     }
   },
-  prepatch(oldVnode,vnode){
+  prepatch(oldVnode: VNode,vnode: VNode){
 
   },
+  insert(vnode: VNode){
 
+  }
+
+}
+
+function installCompoentHooks(data: WObject){
+  data.hooks = componentVNodeHooks
 }
 
 export function createTextVNode(text: string) {

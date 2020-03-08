@@ -1,4 +1,4 @@
-import { W } from "../instance/index";
+import { W } from "../instance/W";
 import { parse } from './parseElement'
 import { generate } from './generate'
 import { AstElement } from "../types/index";
@@ -12,8 +12,8 @@ class Compile {
   _template: string;
   render: Function
   constructor(w: W, template: string) {
-    this._w = w;
-    this._template = template;
+    this._w = w; // 保存当前实例
+    this._template = template; // 保存当前模版
     this._init()
   }
   _init() {
@@ -37,12 +37,12 @@ class Compile {
   private optimize(ast: AstElement) {
     if(!ast) return
     isStaticKey = makeMap("type,tag,attrsList,attrsMap,plain,parent,children,attrs,staticClass,staticStyle")
-    this.markStatic(ast)
-    this.markStaticRoot(ast)
+    this.markStatic(ast) // 标记每一个节点是不是静态节点
+    this.markStaticRoot(ast)// 标记根节点是不是静态根节点
   }
   markStatic(node){
     node.static = this.isStatic(node)
-    if(node.type===1){
+    if(node.type===1){ // 如果是HTMlELEMENT元素
       node.children.forEach(child =>{
         this.markStatic(child)
         if(!child.static){
@@ -66,7 +66,7 @@ class Compile {
       }
     }
   }
-  isStatic(node){
+  isStatic(node){ // 判断是不是静态标签，就是没有vue数据绑定相关的代码
     if(node.type === 2){ // 表达式
       return false
     }else if(node.type === 3){ // 表示文本节点text

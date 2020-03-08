@@ -38,6 +38,10 @@ export class Observer {
       this.walk(value)
     }
   }
+  /**
+   * 遍历对象定义响应式对象
+   * @param value 
+   */
   walk(value: object) {
     for (const key in value) {
       if (value.hasOwnProperty(key)) {
@@ -45,6 +49,10 @@ export class Observer {
       }
     }
   }
+  /**
+   * 遍历数组每一项
+   * @param array 
+   */
   observeArray(array: Array<any>) {
     for (let i = 0; i < array.length; i++) {
       observe(array[i])

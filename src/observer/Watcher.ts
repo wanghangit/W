@@ -1,5 +1,5 @@
 import { Dep, pushTarget, popTarget } from './Dep'
-import { W } from '../instance/index'
+import { W } from '../instance/W'
 import { swap, warn, isObject } from '../util/index'
 
 let wid = 0

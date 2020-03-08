@@ -10,7 +10,7 @@
   },
   "include": [
     "src/**/*",
-    "demo/*"
+    "demo/*", "demo/pages/compile.js"
   ],
   "exclude": [
     "node_modules",

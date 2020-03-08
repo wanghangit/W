@@ -31,20 +31,19 @@ export function patch(oldVNode: VNode, vnode: VNode, element?: Element): Element
   if (isUndef(element) && sameVNode(oldVNode, vnode)) {
     patchVNode(oldVNode, vnode, insertedVnodeQueue)
   } else {
-    debugger
     // 初次渲染会传入挂载元素
     if (isDef(element.nodeType)) {
       oldVNode = emptyVNodeAt(element)
     }
     // 不是相同类型的vnode会直接将旧的移除，生成新的元素
     const oldElement = oldVNode.elm
-    const parentElm = parentNode(oldElement)
-    createElement(vnode, insertedVnodeQueue, parentElm, nextSibling(oldElement))
-    if(isDef(parentElm)){
+    const parentElm = parentNode(oldElement) // 获取传入el的父元素用来挂载dom使用
+    createElement(vnode, insertedVnodeQueue, parentElm, nextSibling(oldElement)) // 生成dom元素插入到合适的位置
+    if(isDef(parentElm)){ // 将传入的el元素移除
       removeVNodes(parentElm, [oldVNode], 0,0)
     }
   }
-  return vnode.elm
+  return vnode.elm // 返回新生成的dom
 }
 
 /**
@@ -198,6 +197,14 @@ function emptyVNodeAt(element: Element): VNode {
   return new VNode(tagName(element).toLowerCase(), {}, [], undefined, element)
 }
 
+/**
+ * 根据vnode创建dom元素
+ * @param vnode Vnode数据
+ * @param insert 
+ * @param parentElm 父元素
+ * @param sibling 生成元素的下一个元素
+ * @param nested 是不是一个root
+ */
 function createElement(vnode: VNode, insert: any[], parentElm: Node, sibling: Node, nested?: boolean) {
   vnode.isRootInsert = !nested
   /**创建组件类型 */
@@ -205,13 +212,13 @@ function createElement(vnode: VNode, insert: any[], parentElm: Node, sibling: No
     return
   }
   const { data, children, tag}  = vnode
-  if(isDef(tag)){
+  if(isDef(tag)){ // 如果是原生标签
     vnode.elm = createHtmlElement(tag)
-    createChildren(vnode,children,insert)
+    createChildren(vnode,children,insert) // 根据vnode的children将子vnode转化成dom挂载到当前dom上
     if(vnode.data){
-      invokeCreateHooks(vnode)
+      invokeCreateHooks(vnode) // 执行生命周期方法create
     }
-    insertDom(parentElm, vnode.elm, sibling)
+    insertDom(parentElm, vnode.elm, sibling) // 执行真正的挂载dom操作
   }else { // 如果是文本插入文本
     vnode.elm = createTextNode(vnode.text)
     insertDom(parentElm, vnode.elm, sibling)

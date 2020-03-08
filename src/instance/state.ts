@@ -1,4 +1,4 @@
-import { W } from './index'
+import { W } from './W'
 import { observe } from '../observer/index'
 import { noop, hasOwn, warn } from '../util/index'
 

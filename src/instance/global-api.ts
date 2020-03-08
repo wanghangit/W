@@ -13,8 +13,8 @@ export function _extend(options: WObject = {}){
   if(cacheCtor[SuperId]){
     return cacheCtor[SuperId]
   }
-  const name = options.name || Super.name
-  const Sub = function(coptions){
+  const name = options.name
+  let Sub: WObject = function(coptions){
     this._init(coptions)
   }
   Sub.prototype = Object.create(Super.prototype)

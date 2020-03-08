@@ -1,5 +1,5 @@
 import { WObject } from "../types/index"
-import { W } from "../instance/index";
+import { W } from "../instance/W";
 
 export class VNode {
   tag: string; // 表示元素的类型

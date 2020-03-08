@@ -1,18 +1,4 @@
-import { W } from '../src/instance/index'
-
-const demo = {
-  data: {
-    child: 'i am a child'
-  },
-  template: `<div>{{child}}</div>`
-}
-
-W.component('demo', {
-  data: {
-    child: 'i am a child'
-  },
-  template: `<div>{{child}}</div>`
-})
+import { W } from '../../src/instance/W'
 
 const w = new W({
   el: "#root",
@@ -21,7 +7,7 @@ const w = new W({
       "aa","bb","cc"
     ],
     testClass: "test",
-    isShow: true,
+    isShow: false,
     person: {
       name: "xiaoming"
     }
@@ -46,15 +32,4 @@ const w = new W({
     `<div @click="remove">remove</div>`+
     `<ul class="demo"><li w-for="(item, index) in list" @click="clickLi" >{{item}}:{{index}}</li></ul>`+
   `</div>`,
-  // template: `<div>`+
-  //   `<demo />`+
-  // `</div>`,
-  // render(h) {
-  //   return h("div", {class: 'demo'},
-  //     [h("span",{class: 'text', on: {
-  //       click: this.clickText
-  //     }}, this.text)])
-  // },
 })
-window.W = W
-window.w = w

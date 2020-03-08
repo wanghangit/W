@@ -1,10 +1,27 @@
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const fs = require("fs");
 
+const dirname = path.resolve(__dirname, "./demo/pages");
+
+const fileNames = fs.readdirSync(dirname, "utf-8");
+const entrys = {};
+const pages = []
+fileNames.forEach(file => {
+  const item = file.replace(".js", "")
+  entrys[item] = path.join(dirname, "/" + file);
+  pages.push(
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "./demo/index.html"),
+      filename: item+'.html',
+      chunks: [item]
+    })
+  )
+});
+
+console.log(pages)
 module.exports = {
-  entry: {
-    main: path.resolve(__dirname, './demo/index.js')
-  },
+  entry: entrys,
   resolve: {
     extensions: ['.ts', '.js']
   },
@@ -27,9 +44,5 @@ module.exports = {
       },
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './demo/index.html')
-    })
-  ]
+  plugins: pages
 };

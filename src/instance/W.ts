@@ -34,10 +34,10 @@ export class W {
     this._options = options
     this._isW = true
     this._watchers = []
-    initState(this)
-    initRender(this)
+    initState(this) // 初始化数据
+    initRender(this) // 初始化渲染相关方法
     if (options.el) {
-      this._mount(options.el)
+      this._mount(options.el) // 执行dom挂载
     }
   }
   _mount(el: string) {
