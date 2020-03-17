@@ -19,7 +19,6 @@ fileNames.forEach(file => {
   )
 });
 
-console.log(pages)
 module.exports = {
   entry: entrys,
   resolve: {
@@ -42,6 +41,11 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/
       },
+      {
+        test: /\.vue$/,
+        use: 'vue-loader',
+        exclude: /node_modules/
+      }
     ]
   },
   plugins: pages

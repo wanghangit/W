@@ -84,10 +84,11 @@ const componentVNodeHooks = {
     }
   },
   prepatch(oldVnode: VNode,vnode: VNode){
+    const options = vnode.componentOptions
 
   },
   insert(vnode: VNode){
-
+    const { isM } = vnode.componentInstance
   }
 
 }
