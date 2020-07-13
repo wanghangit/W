@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const fs = require("fs");
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 
 const dirname = path.resolve(__dirname, "./demo/pages");
 
@@ -37,7 +39,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|ts)$/,
+        test: /\.(ts)$/,
         use: 'ts-loader',
         exclude: /node_modules/
       },
@@ -45,8 +47,14 @@ module.exports = {
         test: /\.vue$/,
         use: 'vue-loader',
         exclude: /node_modules/
+      },{
+        test: /\.js$/,
+        use: 'babel-loader',
+        exclude: /node_modules/
       }
     ]
   },
-  plugins: pages
+  plugins: [
+    new VueLoaderPlugin()
+  ].concat(pages)
 };

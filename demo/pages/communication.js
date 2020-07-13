@@ -1,16 +1,19 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue/dist/vue.esm.browser";
+import VueRouter from "vue-router";
+import routerApp from "../components/router.vue";
+import { routes } from '../components/routes'
 
-import propsComponent from '../components/props-parent.vue'
+Vue.use(VueRouter);
 
-const routes = [
-  {path:'props', component: propsComponent}
-]
 const router = new VueRouter({
   routes
-})
+});
 
 new Vue({
-  el: '#root',
-  
-})
+  el: "#root",
+  template: `<div>
+  <router-app></router-app>
+</div>`,
+  components: { routerApp },
+  router
+});
